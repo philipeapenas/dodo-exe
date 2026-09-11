@@ -1,6 +1,6 @@
 # Dodo.exe
 
-Um workspace de IA + Obsidian onde skills especializadas trabalham como um time, e o seu vault do Obsidian e o segundo cerebro que elas leem e escrevem.
+O Dodo.exe e a primeira distribuicao do projeto Dodo.IA: um ecossistema portatil de agentes de IA com orquestracao, memoria operacional e Obsidian. Ele e o inicio de um Jarvis pessoal que aprende a estrutura, as operacoes e a forma de decidir de quem instala.
 
 Voce clona, abre no Claude Code, no Codex ou no Antigravity, diz **"instala o Dodo.exe"** e sai com a mesma estrutura que roda uma operacao real: um roteador que manda cada pedido pra skill certa, regras que valem pra todas elas, um protocolo de mensagens pra elas passarem trabalho uma pra outra, e um vault organizado por operacao, tarefa, processo e estudo.
 
@@ -112,6 +112,12 @@ sh install.sh        (ou install.ps1 no Windows)
 ```
 
 O instalador nunca sobrescreve nada que ja exista no seu `Vault/`.
+
+---
+
+## Licenca
+
+Distribuido sob a [Dodo Company License](LICENSE). O codigo pode ser usado, modificado e distribuido com o aviso de copyright e a licenca. Os nomes, logos e identidade visual de Dodo.exe e Dodo.IA nao sao cedidos como marca.
 
 ---
 

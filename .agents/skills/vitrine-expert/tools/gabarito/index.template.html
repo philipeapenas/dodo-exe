@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{NEGOCIO}}{{CIDADE_SUFIXO}}</title>
+<meta name="description" content="{{META_DESCRICAO}}">
+<meta name="theme-color" content="{{COR_FUNDO}}">
+
+<!-- ATENCAO: enquanto a estrutura estiver com dado de exemplo, a pagina fica fora
+     do indice de busca. Ao trocar os dados reais, REMOVER esta linha e a barra
+     .aviso-estrutura do topo do body. -->
+<meta name="robots" content="noindex">
+
+<!-- Trocar as tres URLs de uma vez quando o dominio proprio existir. Defasadas,
+     o preview de link no WhatsApp para de carregar. -->
+<link rel="canonical" href="{{URL_BASE}}/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="{{NEGOCIO}}">
+<meta property="og:title" content="{{NEGOCIO}}{{CIDADE_SUFIXO}}">
+<meta property="og:description" content="{{META_DESCRICAO}}">
+<meta property="og:url" content="{{URL_BASE}}/">
+<meta property="og:image" content="{{URL_BASE}}/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/img/logo{{EXT_LOGO}}" type="{{MIME_LOGO}}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{{URL_FONTES}}" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<a class="pular" href="#servicos">Ir direto para os serviços</a>
+
+<!-- REMOVER esta barra junto com o noindex quando os dados reais entrarem. -->
+<div class="aviso-estrutura" id="aviso-estrutura">
+  ESTRUTURA EM MONTAGEM &mdash; os trechos destacados em amarelo são exemplo e precisam ser substituídos antes de publicar
+</div>
+
+<header class="topo">
+  <div class="wrap topo-linha">
+    <a class="marca" href="#topo">
+      <img src="assets/img/logo{{EXT_LOGO}}" alt="{{NEGOCIO}}" width="44" height="44">
+      <span class="marca-nome">{{MARCA_NOME}}<small>{{MARCA_SUB}}</small></span>
+    </a>
+    <a class="btn btn-primario" href="{{ZAP_TOPO}}" data-zap>
+      {{SVG_WHATSAPP}}
+      WhatsApp
+    </a>
+  </div>
+</header>
+
+<main id="topo">
+
+  <!-- ====== BLOCO 1, 2, 4 - Hero ====== -->
+  <section class="hero">
+    <div class="wrap">
+      <img class="hero-logo" src="assets/img/logo{{EXT_LOGO}}" alt="{{NEGOCIO}}" width="148" height="148">
+
+      <h1>{{HEADLINE}}</h1>
+      <span class="filete centro" aria-hidden="true"></span>
+
+      <p class="hero-sub">{{SUBHEADLINE}}</p>
+
+      <div class="hero-acoes">
+        <a class="btn btn-primario" href="{{ZAP_TOPO}}" data-zap>
+          {{SVG_WHATSAPP}}
+          {{CTA_PRIMARIO}}
+        </a>
+        <p class="microcopy">{{CTA_MICROCOPY}}</p>
+      </div>
+    </div>
+    <div class="hero-arco" aria-hidden="true"></div>
+  </section>
+
+  <!-- ====== BLOCO 3 e 5 - Abertura e dor ====== -->
+  <section class="secao faixa-marca">
+    <div class="wrap duas">
+      <div>
+        <p class="eyebrow">Por que aqui</p>
+        <h2>{{TITULO_ABERTURA}}</h2>
+        <span class="filete" aria-hidden="true"></span>
+        {{ABERTURA_PARAGRAFOS}}
+      </div>
+      <div>
+        <p class="eyebrow">Soa familiar?</p>
+        <ul class="lista-dor">
+{{DOR_ITENS}}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== BLOCO 6 - Solucao e mecanismo unico ====== -->
+  <section class="secao">
+    <div class="wrap" style="max-width:46rem;text-align:center">
+      <p class="eyebrow">O jeito daqui</p>
+      <h2 style="font-size:clamp(1.75rem,4.5vw,2.5rem)">{{TITULO_MECANISMO}}</h2>
+      <span class="filete centro" aria-hidden="true"></span>
+      {{MECANISMO_PARAGRAFOS}}
+    </div>
+  </section>
+
+  <!-- ====== BLOCO 7 - Beneficios ====== -->
+  <section class="secao" style="padding-top:0">
+    <div class="wrap">
+      <div class="grade grade-2 grade-3">
+{{BENEFICIOS_CARDS}}
+      </div>
+      <div class="acao-secao">
+        <a class="btn btn-contorno" href="{{ZAP_TOPO}}" data-zap>{{CTA_PRIMARIO}}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== BLOCO 9 - Servicos. PICO DA PAGINA ====== -->
+  <section class="secao faixa-marca" id="servicos">
+    <div class="wrap">
+      <div style="text-align:center;max-width:34rem;margin-inline:auto">
+        <p class="eyebrow">Serviços</p>
+        <h2 style="font-size:clamp(1.875rem,5vw,2.75rem)">O que a gente faz aqui</h2>
+        <span class="filete centro" aria-hidden="true"></span>
+      </div>
+
+      <div class="grade grade-2 {{GRADE_SERVICOS}}" style="margin-top:3rem">
+{{SERVICOS_CARDS}}
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Faixa de preco. A objecao numero 1 do mercado ganha bloco proprio
+       em vez de ficar escondida no acordeao. ====== -->
+  <section class="faixa-preco">
+    <div class="wrap preco-linha">
+      <div>
+        <h2>E quanto custa?</h2>
+        <p>{{TEXTO_PRECO}}</p>
+      </div>
+      <a class="btn btn-primario" href="{{ZAP_VALORES}}" data-zap>Pedir os valores</a>
+    </div>
+  </section>
+
+  <!-- ====== BLOCO 8 - Prova social. NADA AQUI E REAL ATE O MATERIAL CHEGAR ====== -->
+  <section class="secao">
+    <div class="wrap">
+      <div style="text-align:center;max-width:34rem;margin-inline:auto">
+        <p class="eyebrow">Trabalhos</p>
+        <h2 style="font-size:clamp(1.75rem,4.5vw,2.5rem)">Feito aqui dentro</h2>
+        <span class="filete centro" aria-hidden="true"></span>
+      </div>
+
+      <div class="galeria" style="margin-top:2.5rem">
+{{GALERIA}}
+      </div>
+
+      <div class="grade grade-2 grade-3" style="margin-top:1.75rem">
+{{DEPOIMENTOS}}
+      </div>
+
+{{LINHA_INSTAGRAM}}
+      <div class="acao-secao">
+        <a class="btn btn-contorno" href="{{ZAP_TRABALHOS}}" data-zap>Quero um desses pra mim</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== BLOCO 10 - Objecoes ====== -->
+  <section class="secao faixa-marca">
+    <div class="wrap" style="max-width:46rem">
+      <p class="eyebrow">Antes de você perguntar</p>
+      <h2 style="font-size:clamp(1.75rem,4.5vw,2.5rem)">O que quase todo cliente <em>quer saber</em></h2>
+      <span class="filete" aria-hidden="true"></span>
+
+      <div style="margin-top:2rem">
+{{OBJECOES}}
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== BLOCO 11 - Compromisso (substitui a garantia) ====== -->
+  <section class="secao faixa-escura">
+    <div class="wrap" style="max-width:42rem;text-align:center">
+      <p class="eyebrow">Compromisso</p>
+      <h2 style="font-size:clamp(1.75rem,4.5vw,2.5rem)">{{TITULO_COMPROMISSO}}</h2>
+      <span class="filete centro" aria-hidden="true"></span>
+      {{COMPROMISSO_PARAGRAFOS}}
+    </div>
+  </section>
+
+  <!-- ====== BLOCO 13 - FAQ ====== -->
+  <section class="secao">
+    <div class="wrap" style="max-width:46rem">
+      <p class="eyebrow">Dúvidas</p>
+      <h2 style="font-size:clamp(1.75rem,4.5vw,2.5rem)">Perguntas frequentes</h2>
+      <span class="filete" aria-hidden="true"></span>
+
+      <div style="margin-top:2rem">
+{{FAQ}}
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== BLOCO 14 - CTA final ====== -->
+  <section class="cta-final">
+    <div class="wrap">
+      <h2>{{CTA_FINAL_TITULO}}</h2>
+      <span class="filete centro" aria-hidden="true"></span>
+      <p style="margin-top:1.5rem">{{CTA_FINAL_TEXTO}}</p>
+      <a class="btn btn-claro" href="{{ZAP_FINAL}}" data-zap style="margin-top:.75rem">
+        {{SVG_WHATSAPP}}
+        {{CTA_SECUNDARIO}}
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ====== BLOCO 15 - Rodape ====== -->
+<footer class="rodape">
+  <div class="wrap">
+    <div class="rodape-linha">
+      <div>
+        <span class="marca-nome">{{MARCA_NOME}}<small>{{MARCA_SUB}}</small></span>
+        <p style="margin-top:.75rem">{{RODAPE_RESUMO}}</p>
+      </div>
+      <div>
+        <p style="font-weight:700;margin-bottom:.5rem">{{RODAPE_ONDE_TITULO}}</p>
+{{RODAPE_ONDE}}
+      </div>
+      <div>
+        <p style="font-weight:700;margin-bottom:.5rem">Contato</p>
+        <p><a href="{{ZAP_SIMPLES}}" data-zap>WhatsApp {{WHATSAPP_EXIBICAO}}</a></p>
+{{RODAPE_INSTAGRAM}}
+      </div>
+    </div>
+    <p class="rodape-legal">{{NEGOCIO}}{{CIDADE_SUFIXO}}</p>
+  </div>
+</footer>
+
+<a class="btn btn-primario zap-flutuante" href="{{ZAP_FINAL}}" data-zap aria-label="Falar no WhatsApp">
+  {{SVG_WHATSAPP}}
+  Agendar
+</a>
+
+<script defer src="assets/js/vendor/gsap.min.js"></script>
+<script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
+<script defer src="assets/js/vendor/lenis.min.js"></script>
+<script defer src="assets/js/movimento.js"></script>
+</body>
+</html>

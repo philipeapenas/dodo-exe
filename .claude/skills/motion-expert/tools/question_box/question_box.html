@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caixinha de Pergunta (replica Instagram) - motion-expert</title>
+<style>
+  /* Fonte estilo Instagram/iPhone (Inter ~ SF Pro) - VENDORIZADA local (offline). */
+  @font-face {
+    font-family: "Inter";
+    font-weight: 400;
+    font-style: normal;
+    src: url("assets/fonts/inter-400.woff2") format("woff2");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Inter";
+    font-weight: 600;
+    font-style: normal;
+    src: url("assets/fonts/inter-600.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  /* ===========================================================
+     Replica do sticker "Faca uma pergunta" do Instagram.
+     - O elemento a ser CAPTURADO (screenshot) e #qbox.
+     - Fundo da pagina e so PREVIEW; o export e transparente
+       (o dev captura o elemento #qbox com background transparente).
+     - Texto injetavel via ?q=<urlencoded>. Sem ?q, cicla os exemplos.
+     =========================================================== */
+
+  :root {
+    /* canvas de referencia: 9:16 720x1280. Caixa ~620px de largura. */
+    --box-width: 620px;
+    --radius: 22px;
+    --header-bg: #28282c;        /* charcoal escuro do topo */
+    --header-fg: #ffffff;
+    --body-bg: #ffffff;
+    --body-fg: #1b1b1d;          /* quase-preto do texto */
+    --header-size: 24px;
+    --body-size: 33px;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* PREVIEW: fundo neutro so pra enxergar a caixa branca.
+     No modo export (?export=1) o fundo fica transparente. */
+  body {
+    background: #b8b3ad;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding: 60px 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+                 "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+  }
+  body.export {
+    background: transparent;
+    padding: 0;
+    gap: 0;
+  }
+
+  /* ===== A CAIXA (capturar este elemento) ===== */
+  #qbox {
+    width: var(--box-width);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.20);
+    font-family: "Inter", -apple-system, "Helvetica Neue", "Segoe UI", Roboto,
+                 Helvetica, Arial, "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #qbox .qbox-header {
+    background: var(--header-bg);
+    color: var(--header-fg);
+    text-align: center;
+    font-size: var(--header-size);
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    padding: 19px 24px 18px;
+  }
+
+  #qbox .qbox-body {
+    background: var(--body-bg);
+    color: var(--body-fg);
+    text-align: left;
+    font-size: var(--body-size);
+    font-weight: 400;
+    line-height: 1.32;
+    padding: 30px 30px 38px;
+    min-height: var(--body-min-h, 0px);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* emoji como imagem (estilo Apple/iPhone) - usado quando ?emoji=apple (default) */
+  #qbox .qbox-body img.emoji {
+    height: 1em;
+    width: 1em;
+    vertical-align: -0.16em;
+    margin: 0 0.02em;
+    display: inline-block;
+  }
+
+  /* controles de preview (escondidos no export) */
+  #previewbar {
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: #2c2c2c;
+    background: rgba(255,255,255,0.75);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  body.export #previewbar { display: none; }
+  #previewbar button {
+    border: 1px solid #999;
+    background: #fff;
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+  <div id="qbox">
+    <div class="qbox-header">Faça uma pergunta</div>
+    <div class="qbox-body"><span id="qbody"></span></div>
+  </div>
+
+  <div id="previewbar">
+    <span>preview:</span>
+    <button id="prev">&lt;</button>
+    <span id="idx">1/7</span>
+    <button id="next">&gt;</button>
+    <span style="opacity:.7">(use ?q=texto para injetar | ?export=1 some o fundo)</span>
+  </div>
+
+<script>
+  // Perguntas de exemplo pro preview, com emoji pra testar a renderizacao.
+  const EXEMPLOS = [
+    "Qual sua rotina de manhã?",
+    "Onde você comprou esse vestido? 😳😳",
+    "Você treina todo dia?",
+    "Qual foi a viagem mais marcante? 🤭",
+    "Que café você toma? 🫓",
+    "Me dá uma dica de livro kkkk",
+    "Qual sua flor favorita? 🌸"
+  ];
+
+  const params = new URLSearchParams(location.search);
+  const body = document.getElementById("qbody");
+
+  if (params.has("export")) document.body.classList.add("export");
+
+  // largura customizavel opcional: ?w=620 (use a largura do video pra full-width)
+  if (params.has("w")) {
+    document.documentElement.style.setProperty("--box-width", params.get("w") + "px");
+  }
+  // altura minima do corpo (garante cobrir a faixa da caixa antiga): ?minh=120
+  if (params.has("minh")) {
+    document.documentElement.style.setProperty("--body-min-h", params.get("minh") + "px");
+  }
+
+  // estilo de emoji: ?emoji=apple (default, identico ao iPhone) | native (fonte do SO/Windows)
+  const EMOJI_STYLE = (params.get("emoji") || "apple").toLowerCase();
+
+  // Renderiza o texto na caixa. Em modo apple, troca cada emoji por <img> Apple.
+  function setBody(text) {
+    body.textContent = "";
+    if (EMOJI_STYLE === "native" || !window.Intl || !Intl.Segmenter) {
+      body.textContent = text;
+      return;
+    }
+    const seg = new Intl.Segmenter("pt", { granularity: "grapheme" });
+    let buf = "";
+    const flush = () => {
+      if (buf) { body.appendChild(document.createTextNode(buf)); buf = ""; }
+    };
+    for (const { segment } of seg.segment(text)) {
+      if (/\p{Extended_Pictographic}/u.test(segment)) {
+        flush(); // preserva os espacos naturais do texto ao redor do emoji
+        const img = document.createElement("img");
+        img.className = "emoji";
+        img.alt = segment;
+        // 1o: emoji LOCAL vendorizado (assets/emoji/<hex>.png). Fallback: emojicdn (rede).
+        // 2o fallback (onerror do CDN): emoji nativo do SO.
+        const hex = [...segment].map(c => c.codePointAt(0))
+                                .filter(cp => cp !== 0xFE0F)
+                                .map(cp => cp.toString(16)).join("-");
+        const cdn = "https://emojicdn.elk.sh/" + encodeURIComponent(segment) + "?style=apple";
+        img.dataset.cdn = cdn;
+        img.onerror = function () {
+          if (this.src.indexOf("assets/emoji/") !== -1) { this.src = this.dataset.cdn; }
+          else { this.replaceWith(document.createTextNode(this.alt)); }
+        };
+        img.src = "assets/emoji/" + hex + ".png";
+        body.appendChild(img);
+      } else {
+        buf += segment;
+      }
+    }
+    flush();
+  }
+
+  if (params.has("q")) {
+    // texto injetado (modo render do dev). Deterministico.
+    setBody(params.get("q"));
+  } else {
+    // modo preview: cicla os exemplos
+    let i = 0;
+    const idx = document.getElementById("idx");
+    const render = () => { setBody(EXEMPLOS[i]); idx.textContent = (i+1) + "/" + EXEMPLOS.length; };
+    document.getElementById("next").onclick = () => { i = (i+1) % EXEMPLOS.length; render(); };
+    document.getElementById("prev").onclick = () => { i = (i-1+EXEMPLOS.length) % EXEMPLOS.length; render(); };
+    render();
+  }
+</script>
+</body>
+</html>

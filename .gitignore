@@ -1,0 +1,58 @@
+# O seu vault: e seu, nunca sobe. O modelo de fabrica vive em vault-modelo/.
+Vault/
+# Backup que os scripts da dodo-ia fazem antes de escrever no vault
+.backups/
+
+# Projetos com repositorio proprio (Regra de Ouro 9)
+Projetos/Dominio/*/
+
+# Segredos
+.env
+.env.*
+*.pem
+*.key
+**/sessions/*.session
+**/credentials.json
+**/*service_account*.json
+*.local.json
+*.local.txt
+
+# Estado de runtime do protocolo de mensagens (o zerado de fabrica fica versionado)
+Agente Orquestrador/Resumo do projeto/_arquivo/
+Agente Orquestrador/Resumo do projeto/session_summary.json
+
+# Dependencias, build e cache
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.vercel/
+.next/
+dist/
+build/
+.cache/
+
+# Logs e midia gerada
+*.log
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.part
+*.zip
+
+# Saida de ferramenta de skill
+**/tools/output/
+.agents/skills/dodo-ia/tools/dissecacao.json
+.agents/skills/dodo-ia/tools/dissecacao.md
+.claude/skills/dodo-ia/tools/dissecacao.json
+.claude/skills/dodo-ia/tools/dissecacao.md
+
+# Editor e sistema
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+.claude/settings.local.json
+.codex/config.toml
